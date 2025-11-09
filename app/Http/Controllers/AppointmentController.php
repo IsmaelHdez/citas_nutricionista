@@ -19,18 +19,18 @@ class AppointmentController extends Controller
         $schedules = Schedules::all();
         $dayschedules = DaySchedules::whereIn('schedule_id', $schedules->pluck('id'))->get();
 
-        // 🔸 Buscar el horario de verano e invierno dentro de la colección
+        // Buscar el horario de verano e invierno dentro de la colección
         $verano = $dayschedules->where('schedule_id', 1)->first();
         $invierno = $dayschedules->where('schedule_id', 2)->first();
 
-        // 🔸 Comprobar si existen antes de acceder
+        // Comprobar si existen antes de acceder
         $dayschedulesStartV = $verano ? date('H:i', strtotime($verano->start)) : null;
         $dayschedulesEndV   = $verano ? date('H:i', strtotime($verano->end)) : null;
 
         $dayschedulesStartI = $invierno ? date('H:i', strtotime($invierno->start)) : null;
         $dayschedulesEndI   = $invierno ? date('H:i', strtotime($invierno->end)) : null;
 
-        // 🔸 Repetimos para la tabla schedules (verano e invierno)
+        // Repetimos para la tabla schedules (verano e invierno)
         $veranoSchedule = $schedules->where('id', 1)->first();
         $inviernoSchedule = $schedules->where('id', 2)->first();
 
@@ -46,10 +46,10 @@ class AppointmentController extends Controller
 
     public function store(Request $request)
     {
-        // ✅ 2. Combinar fecha y hora en un solo valor 'start'
+        // Combinar fecha y hora en un solo valor 'start'
         $start = Carbon::parse($request->input('date') . ' ' . $request->input('time'));
 
-        // ✅ 3. Crear la cita
+        // Crear la cita
         $appointment = new Appointment();
         $appointment->user_id = auth()->id();
         $appointment->appointment_type_id = $request->input('appointment');
@@ -57,7 +57,7 @@ class AppointmentController extends Controller
         $appointment->start = $start; // 👈 este campo disparará el cálculo de 'end' en el modelo
         $appointment->save();
 
-        // ✅ 4. Redirigir con mensaje de éxito
+        // Redirigir con mensaje de éxito
         return redirect()
             ->route('reserve.index')
             ->with('success', 'Cita reservada con éxito.');
