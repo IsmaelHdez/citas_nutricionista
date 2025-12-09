@@ -7,5 +7,7 @@
     <p>Estas en la pagina index.</p>
 
     <a href="{{ route('login.create') }}">Crear Usuario</a>
+
+    <livewire:counter />
     
 @endsection
