@@ -8,7 +8,7 @@
     </title>
 </head>
 <body>
-    @include('layouts._partials.menu')
+    <livewire:header-nav />
     @yield('content')
 </body>
 </html>
