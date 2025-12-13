@@ -11,7 +11,7 @@
     <!-- Livewire Styles -->
     @livewireStyles
 </head>
-<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 font-sans">
 
     <!-- Header Livewire Component -->
     <livewire:header-nav />
