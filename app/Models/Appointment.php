@@ -1,60 +1,138 @@
 <?php
 
-namespace App\Models;
+namespace App\Livewire\Appointments;
 
-use Illuminate\Database\Eloquent\Model;
-use App\Enums\EnumStatus;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use Livewire\Component;
 use App\Models\AppointmentType;
+use App\Models\Appointment;
+use App\Models\Schedules;
+use App\Models\DaySchedules;
+use App\Enums\EnumStatus;
 use Carbon\Carbon;
 
-class Appointment extends Model
+class Reserve extends Component
 {
-    use HasFactory;
-    //
-    protected $fillable = [
-        'user_id',
-        'appointment_type_id',
-        'status',
-    ];
+    // ===== Formulario =====
+    public string $date = '';
+    public string $time = '';
+    public int|string $appointment = '';
 
-    protected $hidden = [
-        'created_at',
-        'updated_at',
-    ];
+    // ===== Estado =====
+    public bool $isSelectableDay = false;
 
+    // ===== Datos =====
+    public $appointment_types;
+    public $schedules;
+    public $dayschedules;
 
-    protected $casts = [
-        'status' => EnumStatus::class,
-        'start' => 'datetime',
-        'end' => 'datetime',
-    ];
+    public ?string $dayschedulesStartV = null;
+    public ?string $dayschedulesEndV   = null;
+    public ?string $dayschedulesStartI = null;
+    public ?string $dayschedulesEndI   = null;
 
-    public function user()
+    public ?string $schedulesStartV = null;
+    public ?string $schedulesEndV   = null;
+    public ?string $schedulesStartI = null;
+    public ?string $schedulesEndI   = null;
+
+    /**
+     * Carga inicial
+     */
+    public function mount()
     {
-        return $this->belongsTo(User::class);
+        $this->appointment_types = AppointmentType::all();
+        $this->schedules = Schedules::all();
+
+        $this->dayschedules = DaySchedules::whereIn(
+            'schedule_id',
+            $this->schedules->pluck('id')
+        )->get();
+
+        // Day schedules
+        $verano = $this->dayschedules->where('schedule_id', 1)->first();
+        $invierno = $this->dayschedules->where('schedule_id', 2)->first();
+
+        $this->dayschedulesStartV = $verano
+            ? date('H:i', strtotime($verano->start))
+            : null;
+
+        $this->dayschedulesEndV = $verano
+            ? date('H:i', strtotime($verano->end))
+            : null;
+
+        $this->dayschedulesStartI = $invierno
+            ? date('H:i', strtotime($invierno->start))
+            : null;
+
+        $this->dayschedulesEndI = $invierno
+            ? date('H:i', strtotime($invierno->end))
+            : null;
+
+        // Schedules
+        $veranoSchedule = $this->schedules->where('id', 1)->first();
+        $inviernoSchedule = $this->schedules->where('id', 2)->first();
+
+        $this->schedulesStartV = $veranoSchedule?->start;
+        $this->schedulesEndV   = $veranoSchedule?->end;
+        $this->schedulesStartI = $inviernoSchedule?->start;
+        $this->schedulesEndI   = $inviernoSchedule?->end;
     }
 
-    public function appointmentType()
+    /**
+     * Se ejecuta al cambiar la fecha
+     */
+    public function updatedDate($value)
     {
-        return $this->belongsTo(AppointmentType::class);
+        if (! $value) {
+            $this->isSelectableDay = false;
+            return;
+        }
+
+        $date = Carbon::parse($value);
+
+        // SOLO miramos la fecha seleccionada
+        $this->isSelectableDay = ! $date->isWeekend();
+
+        if (! $this->isSelectableDay) {
+            $this->time = '';
+        }
     }
 
-    protected static function boot()
+    /**
+     * Guardar cita
+     */
+    public function store()
     {
-        parent::boot();
+        $this->validate([
+            'date' => [
+                'required',
+                'date',
+                function ($attr, $value, $fail) {
+                    if (Carbon::parse($value)->isWeekend()) {
+                        $fail('No se permiten citas en fines de semana.');
+                    }
+                },
+            ],
+            'time' => 'required',
+            'appointment' => 'required|exists:appointment_types,id',
+        ]);
 
-        static::creating(function ($appointment) {
-            // Asegurar que tenga un tipo de cita válido
-            if ($appointment->appointment_type_id && $appointment->start) {
-                $type = AppointmentType::find($appointment->appointment_type_id);
-                if ($type) {
-                    // Convertir start a Carbon y sumar la duración
-                    $appointment->end = Carbon::parse($appointment->start)
-                        ->addMinutes($type->duration);
-                }
-            }
-        });
+        $start = Carbon::parse("{$this->date} {$this->time}");
+
+        Appointment::create([
+            'user_id' => auth()->id(),
+            'appointment_type_id' => $this->appointment,
+            'status' => EnumStatus::Active,
+            'start' => $start,
+        ]);
+
+        return redirect()
+            ->route('reserve.index')
+            ->with('success', 'Cita reservada con éxito.');
+    }
+
+    public function render()
+    {
+        return view('livewire.appointments.reserve');
     }
 }
