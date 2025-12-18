@@ -4,57 +4,54 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Carbon\Carbon;
-use App\Models\Day_schedule;
+use App\Models\DaySchedule;
+use App\Models\Schedules;
 
 class Calendar extends Component
 {
-    public $inicio;
-    public $fin;
-    public $horas = [];
+    public $fechaSeleccionada; // Fecha elegida por el usuario
+    public $horaSeleccionada;  // Hora elegida por el usuario
+    public $horas = [];        // Horas disponibles para la fecha
 
-    public $weekdayS;
-    public $startS;
-    public $endS;
-
-    public $weekdayW;
-    public $startW;
-    public $endW;
-
-    public function mount()
+    public function updatedFechaSeleccionada($fecha)
     {
-        // Cargar horario de verano
-        $dateSummer = DaySchedules::select('weekday', 'start', 'end')
-            ->where('schedule_id', 1)
-            ->first();
+        // Determinar el día de la semana (0 = domingo, 6 = sábado)
+        $diaSemana = Carbon::parse($fecha)->dayOfWeek;
 
-        if ($dateSummer) {
-            $this->weekdayS = $dateSummer->weekday;
-            $this->startS = $dateSummer->start;
-            $this->endS = $dateSummer->end;
+        // Obtener el mes de la fecha seleccionada
+        $mes = Carbon::parse($fecha)->month;
+
+        if(Schedules::whereRaw('MONTH(start) <= ?', [$mes])->whereRaw('MONTH(end) >= ?', [$mes])->where('id', 1)->first()){
+            $schedule_id = 1; // Verano
         }
-
-        // Cargar horario de invierno
-        $dateWinter = DaySchedules::select('weekday', 'start', 'end')
-            ->where('schedule_id', 2)
-            ->first();
-
-        if ($dateWinter) {
-            $this->weekdayW = $dateWinter->weekday;
-            $this->startW = $dateWinter->start;
-            $this->endW = $dateWinter->end;
+        else{
+            $schedule_id = 2; // Invierno
         }
+        
 
-        // Generar intervalos de hora para el horario de verano
-        if ($this->startS !== null && $this->endS !== null) {
-            $this->inicio = Carbon::createFromTimeString($this->startS);
-            $this->fin = Carbon::createFromTimeString($this->endS);
+        // Obtener horarios de DaySchedule según schedule_id y día
+        $horario = DaySchedule::where('schedule_id', $schedule_id)
+                    ->where('weekday', $diaSemana)
+                    ->first();
 
-            $actual = $this->inicio->copy();
-            while ($actual <= $this->fin) {
+        // Depuración opcional
+        // dd($horario);
+
+        $this->horas = [];
+
+        if ($horario) {
+            $inicio = Carbon::createFromTimeString($horario->start);
+            $fin    = Carbon::createFromTimeString($horario->end);
+
+            $actual = $inicio->copy();
+            while ($actual <= $fin) {
                 $this->horas[] = $actual->format('H:i');
                 $actual->addMinutes(30);
             }
         }
+
+        // Resetear hora seleccionada
+        $this->horaSeleccionada = null;
     }
 
     public function render()

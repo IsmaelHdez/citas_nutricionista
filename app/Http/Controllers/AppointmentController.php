@@ -7,7 +7,7 @@ use App\Models\AppointmentType;
 use App\Enums\EnumStatus;
 use App\Models\Appointment;
 use App\Models\Schedules;
-use App\Models\DaySchedules;
+use App\Models\DaySchedule;
 use Carbon\Carbon;
 
 class AppointmentController extends Controller
@@ -17,7 +17,7 @@ class AppointmentController extends Controller
     {
         $appointment_types = AppointmentType::all();
         $schedules = Schedules::all();
-        $dayschedules = DaySchedules::whereIn('schedule_id', $schedules->pluck('id'))->get();
+        $dayschedules = DaySchedule::whereIn('schedule_id', $schedules->pluck('id'))->get();
 
         // Buscar el horario de verano e invierno dentro de la colección
         $verano = $dayschedules->where('schedule_id', 1)->first();
