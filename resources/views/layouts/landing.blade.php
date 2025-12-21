@@ -11,13 +11,13 @@
     <!-- Livewire Styles -->
     @livewireStyles
 </head>
-<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 font-sans">
+<body>
 
     <!-- Header Livewire Component -->
     <livewire:header-nav />
 
     <!-- Main Content -->
-    <main class="min-h-screen p-6">
+    <main>
         @yield('content')
     </main>
 
