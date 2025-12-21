@@ -6,52 +6,97 @@ use Livewire\Component;
 use Carbon\Carbon;
 use App\Models\DaySchedule;
 use App\Models\Schedules;
+use App\Models\Appointment;
+use App\Models\AppointmentType;
+use App\Enums\EnumStatus;
 
 class Calendar extends Component
 {
-    public $fechaSeleccionada; // Fecha elegida por el usuario
-    public $horaSeleccionada;  // Hora elegida por el usuario
-    public $horas = [];        // Horas disponibles para la fecha
+    public $fechaSeleccionada;
+    public $horaSeleccionada;
+    public $appointment_type;
+    public $horas = [];
+    public $appointment_types;
+
+    protected $rules = [
+        'fechaSeleccionada' => 'required|date',
+        'horaSeleccionada' => 'required',
+        'appointment_type' => 'required|exists:appointment_types,id',
+    ];
+
+    public function mount()
+    {
+        $this->appointment_types = AppointmentType::all();
+    }
 
     public function updatedFechaSeleccionada($fecha)
     {
-        // Determinar el día de la semana (0 = domingo, 6 = sábado)
-        $diaSemana = Carbon::parse($fecha)->dayOfWeek;
+        $this->horaSeleccionada = null; // reset hora
+        $this->horas = [];
 
-        // Obtener el mes de la fecha seleccionada
+        if (!$fecha) return;
+
+        $diaSemana = Carbon::parse($fecha)->dayOfWeek;
         $mes = Carbon::parse($fecha)->month;
 
-        if(Schedules::whereRaw('MONTH(start) <= ?', [$mes])->whereRaw('MONTH(end) >= ?', [$mes])->where('id', 1)->first()){
-            $schedule_id = 1; // Verano
-        }
-        else{
-            $schedule_id = 2; // Invierno
-        }
-        
+        $schedule = Schedules::whereRaw('MONTH(start) <= ?', [$mes])
+                             ->whereRaw('MONTH(end) >= ?', [$mes])
+                             ->first();
 
-        // Obtener horarios de DaySchedule según schedule_id y día
+        $schedule_id = $schedule ? $schedule->id : 2; // default Invierno
+
         $horario = DaySchedule::where('schedule_id', $schedule_id)
-                    ->where('weekday', $diaSemana)
-                    ->first();
-
-        // Depuración opcional
-        // dd($horario);
-
-        $this->horas = [];
+                              ->where('weekday', $diaSemana)
+                              ->first();
 
         if ($horario) {
             $inicio = Carbon::createFromTimeString($horario->start);
-            $fin    = Carbon::createFromTimeString($horario->end);
+            $fin = Carbon::createFromTimeString($horario->end);
 
             $actual = $inicio->copy();
-            while ($actual <= $fin) {
+            while ($actual < $fin) {
                 $this->horas[] = $actual->format('H:i');
                 $actual->addMinutes(30);
             }
         }
+    }
 
-        // Resetear hora seleccionada
-        $this->horaSeleccionada = null;
+    public function submit()
+    {
+        $this->validate();
+
+        if (!$this->fechaSeleccionada || !$this->horaSeleccionada || !$this->appointment_type) {
+            session()->flash('message', 'Debe seleccionar tipo de cita, fecha y hora.');
+            return;
+        }
+
+        try {
+            $start = Carbon::parse($this->fechaSeleccionada . ' ' . $this->horaSeleccionada);
+        } catch (\Exception $e) {
+            session()->flash('message', 'La fecha u hora seleccionada es inválida.');
+            return;
+        }
+
+        // Obtener duración de la cita
+        $tipoCita = AppointmentType::find($this->appointment_type);
+        if (!$tipoCita) {
+            session()->flash('message', 'Tipo de cita no válido.');
+            return;
+        }
+
+        $end = $start->copy()->addMinutes($tipoCita->duration);
+
+        Appointment::create([
+            'appointment_type_id' => $this->appointment_type,
+            'user_id' => auth()->id(),
+            'start' => $start,
+            'end' => $end,
+            'status' => EnumStatus::Active,
+        ]);
+
+        session()->flash('message', 'Cita reservada correctamente.');
+
+        $this->reset(['fechaSeleccionada', 'horaSeleccionada', 'appointment_type', 'horas']);
     }
 
     public function render()

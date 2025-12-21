@@ -6,7 +6,7 @@
     <h1>Reserve</h1>
     <p>Estas en la pagina de reserva.</p>
 
-    <livewire:reserva />
+    
     <livewire:calendar />
 
 
