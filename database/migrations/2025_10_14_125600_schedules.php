@@ -15,7 +15,8 @@ return new class extends Migration
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            // Alineamos los valores permitidos con App\Enums\EnumStatus
+            $table->enum('status', ['active', 'cancelled'])->default('active');
             $table->dateTime('start');
             $table->dateTime('end');
             $table->timestamps();

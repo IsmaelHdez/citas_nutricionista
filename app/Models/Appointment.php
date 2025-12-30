@@ -41,6 +41,11 @@ class Appointment extends Model
         return $this->belongsTo(AppointmentType::class);
     }
 
+    public function scopeSearch($query, $search)
+    {
+        return $query->where('name', 'like', '%' . $search . '%');
+    }
+
     protected static function boot()
     {
         parent::boot();

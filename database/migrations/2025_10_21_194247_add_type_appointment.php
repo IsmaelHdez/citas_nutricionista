@@ -1,10 +1,9 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use App\Enums\EnumStatus;
 use App\Models\AppointmentType;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -14,34 +13,35 @@ return new class extends Migration
     public function up(): void
     {
         //
-        AppointmentType::create([
+
+        DB::table('appointment_types')->insert([
             'name' => 'Consulta Seguimiento',
             'duration' => 20,
             'status' => EnumStatus::Active,
         ]);
 
-        AppointmentType::create([
+        DB::table('appointment_types')->insert([
             'name' => 'Nutrición Deportiva',
             'duration' => 30,
-            'status' => EnumStatus::Active,
+            'status' => 'active',
         ]);
 
-        AppointmentType::create([
+        DB::table('appointment_types')->insert([
             'name' => 'Control de Peso',
             'duration' => 30,
-            'status' => EnumStatus::Active,
+            'status' => 'active',
         ]);
 
-        AppointmentType::create([
+        DB::table('appointment_types')->insert([
             'name' => 'Nutrición Clínica',
             'duration' => 45,
-            'status' => EnumStatus::Active,
+            'status' => 'active',
         ]);
 
-        AppointmentType::create([
+        DB::table('appointment_types')->insert([
             'name' => 'Nutrición Infantil',
             'duration' => 30,
-            'status' => EnumStatus::Active,
+            'status' => 'active',
         ]);
     }
 

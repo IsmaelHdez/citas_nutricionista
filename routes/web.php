@@ -6,6 +6,7 @@ use App\Http\Controllers\AppointmentTypeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ProfileController;
+use App\Livewire\CreateAppointment;
 
 Route::get('/', [UserController::class, 'index'])->name('user.index');
 Route::delete('/destroy/{user}', [UserController::class, 'destroy'])->name('user.destroy');
@@ -29,6 +30,8 @@ Route::get('/contact', function () {
 
 Route::get('/reserve', [AppointmentController::class, 'index'])->name('reserve.index');
 Route::post('/reserve', [AppointmentController::class, 'store'])->name('reserve.store');
+
+Route::get('/appointments/create', CreateAppointment::class)->name('appointments.create');
 
 Route::get('/service', function () {
     return view('service');
