@@ -28,7 +28,10 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
-Route::get('/reserve', [AppointmentController::class, 'index'])->name('reserve.index');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/reserve', [AppointmentController::class, 'index'])->name('reserve.index');
+});
+
 Route::post('/reserve', [AppointmentController::class, 'store'])->name('reserve.store');
 
 Route::get('/appointments/create', CreateAppointment::class)->name('appointments.create');

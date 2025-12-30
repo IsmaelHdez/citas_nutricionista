@@ -3,27 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Enums\EnumStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use App\Models\AppointmentType;
-use Carbon\Carbon;
+use App\Enums\EnumStatus;
 
 class Appointment extends Model
 {
     use HasFactory;
-    //
+
     protected $fillable = [
         'user_id',
         'appointment_type_id',
         'status',
+        'start',
+        'end',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
     ];
-
 
     protected $casts = [
         'status' => EnumStatus::class,

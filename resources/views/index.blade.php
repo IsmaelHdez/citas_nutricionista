@@ -3,9 +3,14 @@
 @section('title', 'Home')
 
 @section('content')
-    <h1>Index</h1>
-    <p>Estas en la pagina index.</p>
-
-    <a href="{{ route('login.create') }}">Crear Usuario</a>
-    
+    <livewire:image-index />
+    <livewire:brands />
+    <livewire:service-index />
+    <livewire:experience />
+    <!-- Ejemplo: Recuadro rojo con texto azul -->
+        <div class="bg-red-500 p-4 rounded-md mt-6">
+            <p class="text-blue-500 font-semibold">
+                Este es un texto azul dentro de un recuadro rojo.
+            </p>
+        </div>
 @endsection

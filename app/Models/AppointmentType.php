@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\EnumStatus;
@@ -8,30 +9,25 @@ use App\Models\Appointment;
 
 class AppointmentType extends Model
 {
-
     use HasFactory;
-    //
+
     protected $fillable = [
         'name',
-        'duration',
+        'duration', // duración en minutos
         'status',
     ];
 
-     protected $hidden = [
+    protected $hidden = [
         'created_at',
         'updated_at',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'status' => EnumStatus::class,
-        ];
-    }
+    protected $casts = [
+        'status' => EnumStatus::class,
+    ];
 
-     public function appointments()
+    public function appointments()
     {
         return $this->hasMany(Appointment::class);
     }
-
 }
