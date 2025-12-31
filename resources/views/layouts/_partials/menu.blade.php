@@ -1,8 +1,8 @@
 <header>
     <nav>
         <ul>
-            <li><a href="{{ route('user.index') }}">Home</a></li>
-            <li><a href="{{ route('about') }}">Sobre nosotros</a></li>
+            <li><a href="">Home</a></li>
+            <li><a href="{{ route('about') }}">Sobre nosotroaas</a></li>
             <li><a href="{{ route('reserve.index') }}">Reservas</a></li>
             <li><a href="{{ route('service') }}">Servicios</a></li>
             <li><a href="{{ route('contact') }}">Contacto</a></li>

@@ -8,23 +8,27 @@
     <!-- Vite CSS y JS -->
     @vite(['resources/js/app.js', 'resources/css/app.css'])
 
-    <!-- Livewire Styles -->
-    @livewireStyles
+
+    <!-- Flux Appearance -->
+    @fluxAppearance()
 </head>
 <body>
 
-    <!-- Header Livewire Component -->
-    <livewire:header-nav />
+    <div class="container mx-auto max-w-7xl">
+        <!-- Header Livewire Component -->
+        <livewire:header-nav />
 
-    <!-- Main Content -->
-    <main>
-        @yield('content')
-    </main>
+        <!-- Main Content -->
+        <main>
+            @yield('content')
+        </main>
+    </div>
 
     <!-- Livewire Scripts -->
     @livewireScripts
 
     <!-- Opcional: Scripts adicionales -->
     @stack('scripts')
+    @fluxScripts
 </body>
 </html>

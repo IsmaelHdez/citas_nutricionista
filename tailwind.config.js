@@ -1,12 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    './resources/views/**/*.blade.php',
-    './resources/js/**/*.js',
-    './resources/js/**/*.vue',
+    './resources/**/*.blade.php',
+    './resources/**/*.js',
+    './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+    './vendor/livewire/flux/stubs/**/*.blade.php',
   ],
   theme: {
     extend: {},
   },
   plugins: [],
 }
+

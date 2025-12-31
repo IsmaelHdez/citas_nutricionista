@@ -1,26 +1,21 @@
-<header>
-    <nav>
-        <ul>
-            <li><a href="{{ route('user.index') }}">Home</a></li>
-            <li><a href="{{ route('about') }}">Sobre nosotros</a></li>
-            <li><a href="{{ route('reserve.index') }}">Reservas</a></li>
-            <li><a href="{{ route('service') }}">Servicios</a></li>
-            <li><a href="{{ route('contact') }}">Contacto</a></li>
-        </ul>
-
-        <ul>
+<header class="flex justify-center border-b border-zinc-200 dark:border-zinc-700 mb-6">
+    <flux:navbar>
+        <flux:navbar.item href="{{ route('user.index') }}">Home</flux:navbar.item>
+        <flux:navbar.item href="{{ route('about') }}">Sobre nosotros</flux:navbar.item>
+        <flux:navbar.item href="{{ route('reserve.index') }}">Reservas</flux:navbar.item>
+        <flux:navbar.item href="{{ route('service') }}">Servicios</flux:navbar.item>
+        <flux:navbar.item href="{{ route('contact') }}">Contacto</flux:navbar.item>
+        <flux:dropdown>
+        <flux:navbar.item icon:trailing="chevron-down">Perfil</flux:navbar.item>
+        <flux:navmenu>
             @guest
-                <li><a href="{{ route('login') }}">Iniciar Sesión</a></li>
-                <li><a href="{{ route('login.create') }}">Registrarse</a></li>
+                <flux:navmenu.item href="{{ route('login') }}">Iniciar Sesión</flux:navmenu.item>
+                <flux:navmenu.item href="{{ route('login.create') }}">Registrarse</flux:navmenu.item>
             @else
-                <li>
-                    <a href="{{ route('user_profile') }}">{{ Auth::user()->name }}</a>
-
-                    <button wire:click="logout" type="button">
-                        Cerrar Sesión
-                    </button>
-                </li>
+                <flux:navmenu.item href="{{ route('user_profile') }}">Perfil</flux:navmenu.item>
+                <flux:navmenu.item href="{{ route('logout') }}">Cerrar Sesión</flux:navmenu.item>
             @endguest
-        </ul>
-    </nav>
+        </flux:navmenu>
+    </flux:dropdown>
+    </flux:navbar>
 </header>
