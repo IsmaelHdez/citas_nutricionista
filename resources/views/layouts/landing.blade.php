@@ -14,7 +14,7 @@
 <body>
 
     <!-- Header Livewire Component -->
-    <livewire:header-nav />
+    <livewire:menu />
 
     <!-- Main Content -->
     <main>

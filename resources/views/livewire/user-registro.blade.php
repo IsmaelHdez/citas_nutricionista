@@ -6,22 +6,22 @@
     <form wire:submit.prevent="submit">
         <div>
             <label>Nombre:</label>
-            <input type="text" wire:model="name">
+            <input type="text" wire:model="name" class="border p-2">
             @error('name') <span class="error">{{ $message }}</span> @enderror
         </div>
 
         <div>
             <label>Email:</label>
-            <input type="email" wire:model="email">
+            <input type="email" wire:model="email" class="border p-2">
             @error('email') <span class="error">{{ $message }}</span> @enderror
         </div>
 
         <div>
             <label>Contraseña:</label>
-            <input type="password" wire:model="password">
+            <input type="password" wire:model="password" class="border p-2">
             @error('password') <span class="error">{{ $message }}</span> @enderror
         </div>
 
-        <button type="submit">Registrar</button>
+        <button type="submit" class="border p-2 text-black px-4 py-2 rounded">Registrar</button>
     </form>
 </div>
