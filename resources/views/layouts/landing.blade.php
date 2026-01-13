@@ -8,11 +8,16 @@
     <!-- Vite CSS y JS -->
     @vite(['resources/js/app.js', 'resources/css/app.css'])
 
+    <!-- Forzar modo light antes de que FluxUI cargue -->
+    <script>
+        // Establecer preferencia de tema light en localStorage ANTES de que Flux lo lea
+        window.localStorage.setItem('flux.appearance', 'light');
+    </script>
 
     <!-- Flux Appearance -->
     @fluxAppearance()
 </head>
-<body>
+<body class="bg-white text-zinc-900">
 
     <div class="container mx-auto max-w-7xl">
         <!-- Header Livewire Component -->
