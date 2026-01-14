@@ -1,9 +1,13 @@
-/* Importar FluxUI CSS primero (debe estar antes de las directivas de Tailwind) */
+@import 'tailwindcss';
 @import '../../vendor/livewire/flux/dist/flux.css';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Fuentes de contenido para Tailwind */
+@source "../../resources/**/*.blade.php";
+@source "../../resources/**/*.js";
+@source "../../vendor/livewire/flux/stubs/**/*.blade.php";
+
+/* Configuración del modo oscuro para Flux */
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* Personalización del color de acento para FluxUI */
 @theme {
@@ -12,10 +16,9 @@
     --color-accent-foreground: var(--color-white);
 }
 
-@layer theme {
-    .dark {
-        --color-accent: var(--color-teal-600);
-        --color-accent-content: var(--color-teal-400);
-        --color-accent-foreground: var(--color-white);
-    }
+/* Colores de acento en modo oscuro */
+.dark {
+    --color-accent: var(--color-teal-600);
+    --color-accent-content: var(--color-teal-400);
+    --color-accent-foreground: var(--color-white);
 }
