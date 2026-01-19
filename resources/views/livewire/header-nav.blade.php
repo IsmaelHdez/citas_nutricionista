@@ -13,7 +13,7 @@
                 <flux:navmenu.item href="{{ route('login.create') }}">Registrarse</flux:navmenu.item>
             @else
                 <flux:navmenu.item href="{{ route('user_profile') }}">Perfil</flux:navmenu.item>
-                <flux:navmenu.item href="{{ route('logout') }}">Cerrar Sesión</flux:navmenu.item>
+                <flux:navmenu.item wire:click="logout" icon="arrow-right-start-on-rectangle">Cerrar Sesión</flux:navmenu.item>
             @endguest
         </flux:navmenu>
     </flux:dropdown>

@@ -3,8 +3,9 @@
 @section('title', 'Reserve')
 
 @section('content')
-    <h1>Reserve</h1>
-    <p>Estas en la pagina de reserva.</p>
+    <flux:heading size="lg" class="mb-6 text-center">Reserva</flux:heading>
+
+    <flux:text class="mb-6 text-center">Estás en la página de inicio de reserva.</flux:text>
 
     
     <livewire:calendar />

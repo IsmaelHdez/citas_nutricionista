@@ -13,7 +13,7 @@ use App\Enums\EnumStatus;
 class Calendar extends Component
 {
     public $fechaSeleccionada;
-    public $horaSeleccionada;
+    public $horaSeleccionada = null;
     public $appointment_type;
     public $horas = [];
     public $appointment_types;

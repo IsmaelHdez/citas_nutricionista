@@ -3,8 +3,9 @@
 @section('title', 'Login')
 
 @section('content')
-    <h1>Iniciar Sesión</h1>
-    <p>Estas en la pagina de inicio de sesión.</p>
+    <flux:heading size="lg" class="mb-6 text-center">Login</flux:heading>
+
+    <flux:text class="mb-6 text-center">Estás en la página de inicio de sesión.</flux:text>
 
     <livewire:user-login />
 
