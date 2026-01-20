@@ -1,46 +1,100 @@
 @extends('layouts.landing')
 
-@section('title', 'About')
+@section('title', 'Quiénes somos')
 
 @section('content')
-    <header>
-        <h1>Sobre Nosotros</h1>
-        <p>Tu bienestar empieza con una buena alimentación</p>
-    </header>
-    
-    <section>
-        <h2>Quiénes Somos</h2>
-        <p>Somos un equipo de <strong>nutricionistas titulados</strong> con amplia experiencia en el ámbito clínico, deportivo y educativo. Cada plan que diseñamos está respaldado por evidencia científica y adaptado a tus necesidades, estilo de vida y objetivos personales.</p>
-        <p>Nos apasiona acompañarte paso a paso en tu proceso de cambio, enseñándote a tomar decisiones saludables que duren toda la vida.</p>
-    </section>
 
-    <section>
-        <h2>Nuestro Enfoque</h2>
-        <ul>
-            <li>🔹 Atención personalizada: evaluación integral de tu estado nutricional.</li>
-            <li>🔹 Educación alimentaria: te damos herramientas para que comprendas lo que comes y por qué.</li>
-            <li>🔹 Resultados reales: metas alcanzables y sostenibles.</li>
-            <li>🔹 Seguimiento constante: citas de control adaptadas a tus avances.</li>
-        </ul>
-    </section>
+    <div class="max-w-4xl mx-auto space-y-12">
 
-    <section>
-        <h2>Nuestros Valores</h2>
-        <div>
-            <div>
-                <h3>Compromiso</h3>
-                <p>Nos involucramos con cada paciente y su bienestar.</p>
-            </div>
-            <div>
-                <h3>Transparencia</h3>
-                <p>Cada recomendación se basa en evidencia científica actual.</p>
-            </div>
-            <div>
-                <h3>Empatía</h3>
-                <p>Entendemos tus retos y te acompañamos sin juicios.</p>
-            </div>
+        <div class="text-center space-y-4">
+            <flux:heading size="xl">
+                Quiénes somos
+            </flux:heading>
+
+            <flux:text class="text-zinc-600">
+                Nutrición basada en evidencia, diseñada para personas reales.
+            </flux:text>
         </div>
-    </section>
-    
-    
+
+        <section class="space-y-4">
+            <flux:text>
+                Somos un equipo de <strong>nutricionistas titulados</strong> con experiencia en el ámbito
+                clínico, deportivo y educativo. Cada plan nutricional que elaboramos está respaldado
+                por evidencia científica y adaptado a tu estilo de vida, necesidades y objetivos.
+            </flux:text>
+
+            <flux:text>
+                Creemos en una nutrición sostenible, sin extremos ni soluciones rápidas. Nuestro
+                enfoque busca que aprendas a tomar decisiones saludables que puedas mantener
+                a lo largo del tiempo.
+            </flux:text>
+        </section>
+
+        <section class="space-y-6">
+            <flux:heading size="lg">
+                Nuestro enfoque
+            </flux:heading>
+
+            <ul class="space-y-3">
+                <li>
+                    <flux:text>
+                        <strong>Atención personalizada:</strong> evaluación integral de tu estado nutricional,
+                        hábitos, antecedentes y objetivos.
+                    </flux:text>
+                </li>
+
+                <li>
+                    <flux:text>
+                        <strong>Educación alimentaria:</strong> te enseñamos a comprender lo que comes y
+                        a tomar mejores decisiones de forma autónoma.
+                    </flux:text>
+                </li>
+
+                <li>
+                    <flux:text>
+                        <strong>Resultados reales:</strong> metas claras, alcanzables y sostenibles,
+                        enfocadas en salud y bienestar.
+                    </flux:text>
+                </li>
+
+                <li>
+                    <flux:text>
+                        <strong>Seguimiento continuo:</strong> ajustes periódicos según tu progreso
+                        y acompañamiento constante.
+                    </flux:text>
+                </li>
+            </ul>
+        </section>
+
+        <section class="space-y-6">
+            <flux:heading size="lg">
+                Nuestros valores
+            </flux:heading>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="space-y-2">
+                    <flux:heading size="sm">Compromiso</flux:heading>
+                    <flux:text>
+                        Nos involucramos activamente en cada proceso, priorizando siempre tu bienestar.
+                    </flux:text>
+                </div>
+
+                <div class="space-y-2">
+                    <flux:heading size="sm">Transparencia</flux:heading>
+                    <flux:text>
+                        Todas nuestras recomendaciones se basan en evidencia científica actualizada.
+                    </flux:text>
+                </div>
+
+                <div class="space-y-2">
+                    <flux:heading size="sm">Empatía</flux:heading>
+                    <flux:text>
+                        Te acompañamos con respeto, cercanía y sin juicios durante todo el proceso.
+                    </flux:text>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
 @endsection
