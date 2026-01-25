@@ -7,7 +7,13 @@
 
     <flux:text class="mb-6 text-center">Estás en la página de inicio de sesión.</flux:text>
 
-    <livewire:user-login />
+
+    <section class="flex-1">
+        <div class="max-w-6xl mx-auto space-y-8">
+            <livewire:user-login />
+        </div>
+    </section>
+    
 
     <h2>Lista de Usuarios</h2>
     @if ($users->isEmpty())

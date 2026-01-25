@@ -95,6 +95,15 @@
             </div>
         </section>
 
+        <section class="mb-20 flex justify-center">
+            <div class="max-w-6xl flex justify-center">
+                <img
+                src="https://nutricionnervion.es/wp-content/uploads/2024/12/nutricion-nervion-servicio-nutricion-clinica.jpg">
+            </div>
+        </section>
+
+
+
     </div>
 
 @endsection

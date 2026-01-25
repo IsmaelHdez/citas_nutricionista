@@ -4,12 +4,11 @@
 
 @section('content')
 
-    {{-- Hero / Slider --}}
     <section class="mb-20">
         <livewire:image-index />
     </section>
 
-    {{-- Marcas / Confianza --}}
+
     <section class="mb-20">
         <div class="max-w-6xl mx-auto text-center space-y-4">
             <flux:heading size="lg">
@@ -26,14 +25,19 @@
         </div>
     </section>
 
-    {{-- Servicios --}}
     <section class="mb-20">
         <div class="max-w-6xl mx-auto space-y-8">
             <livewire:service-index />
         </div>
     </section>
 
-    {{-- Experiencias --}}
+    <section class="mb-20 flex justify-center">
+        <div class="max-w-6xl flex justify-center">
+            <img
+            src="https://cdn.euroinnova.edu.es/img/subidasEditor/copia%20de%20disen%CC%83o%20sin%20ti%CC%81tulo%20(54)-1621262642.webp">
+        </div>
+    </section>
+
     <section class="mb-24 bg-zinc-50 py-16">
         <div class="max-w-6xl mx-auto">
             <livewire:experience />
