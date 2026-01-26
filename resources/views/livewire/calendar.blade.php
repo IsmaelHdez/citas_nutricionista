@@ -10,7 +10,7 @@
         <form wire:submit.prevent="submit">
             <div class="space-y-4">
                 
-                {{-- 2. Tipo de cita --}}
+                
                 <flux:field>
                     <flux:label for="appointment_type">Tipo de cita:</flux:label>
                     <flux:select name="appointment_type" id="appointment_type" wire:model="appointment_type" required>
@@ -23,7 +23,7 @@
                     </flux:select>
                 </flux:field>
 
-                {{-- 3. Fecha --}}
+                
                 <flux:field>
                     <flux:label for="fecha">Selecciona una fecha:</flux:label>
                     <flux:input
@@ -35,7 +35,6 @@
                         required />
                 </flux:field>
 
-                {{-- 4. Horas (Aquí estaba el problema visual y el posible error de sintaxis) --}}
                 <flux:field>
                     <flux:label for="hora">Selecciona una hora:</flux:label>
                     
@@ -54,7 +53,7 @@
                     </flux:select>
                 </flux:field>
 
-                {{-- 5. Botón de envío --}}
+                
                 <div class="flex justify-end">
                     <flux:button type="submit" variant="primary">Reservar cita</flux:button>
                 </div>
