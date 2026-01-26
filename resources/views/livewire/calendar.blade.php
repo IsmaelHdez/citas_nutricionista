@@ -47,6 +47,7 @@
                         :disabled="empty($horas)"
                         placeholder="-- Selecciona una hora --"
                     >
+                        <option value="">-- Selecciona una hora --</option>
                         @foreach($horas as $hora)
                             <option value="{{ $hora }}">{{ $hora }}</option>
                         @endforeach

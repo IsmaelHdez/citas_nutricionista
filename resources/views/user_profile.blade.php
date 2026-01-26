@@ -3,17 +3,20 @@
 @section('title', 'Perfil')
 
 @section('content')
-    <h1>Perfil de @auth {{ Auth::user()->name }} @endauth</h1>
-    <p>Estas en la pagina de perfil.</p>
 
-    @if ($appointments->isEmpty())
-        <p>No hay tipos de citas disponibles.</p>
-    @else
-    <h2>Lista de Citas</h2>
-    <ul>
-        @foreach ($appointments as $appointment)
-            <li>{{ $appointment->appointmentType->name }} - {{ $appointment->start }} hora - Estado: {{ $appointment->status }}</li>
-        @endforeach
-    </ul>
-    @endif
+<section class="max-w-4xl mx-auto space-y-6">
+    <flux:heading size="lg" class="text-center">
+        <strong>Perfil de {{ Auth::user()->name }}</strong>
+    </flux:heading>
+
+    <flux:text class="text-zinc-600" class="text-center">
+        Bienvenido a tu perfil de usuario. Aquí puedes ver y gestionar tus citas programadas.
+    </flux:text>
+
+    <section class="mt-8">
+        <livewire:citas />
+    </section>
+</section>
+
+    
 @endsection
