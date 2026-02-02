@@ -3,16 +3,24 @@
 @section('title', 'Login')
 
 @section('content')
-    <flux:heading size="lg" class="mb-6 text-center">Login</flux:heading>
 
-    <flux:text class="mb-6 text-center">Estás en la página de inicio de sesión.</flux:text>
+<!-- Cabecera -->
+<section class="space-y-4 p-2 border border-green-400 bg-green-200 rounded-lg shadow-md mb-8">
+    <flux:heading size="lg" class="text-center font-bold">
+        Login
+    </flux:heading>
 
+    <flux:text class="text-zinc-700 text-center">
+        Estás en la página de inicio de sesión.
+    </flux:text>
+</section>
 
-    <section class="flex-1">
-        <div class="max-w-6xl mx-auto space-y-8">
-            <livewire:user-login />
-        </div>
-    </section>
+<!-- Formulario de login -->
+<section class="max-w-6xl mx-auto mb-12 px-4 lg:px-0">
+    <div class="space-y-8">
+        <livewire:user-login />
+    </div>
+</section>
     
 
     <h2>Lista de Usuarios</h2>
