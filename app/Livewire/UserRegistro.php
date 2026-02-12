@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 
 class UserRegistro extends Component
@@ -21,18 +22,21 @@ class UserRegistro extends Component
 
     public function submit()
     {
-        $this->validate(); // Valida los datos según las reglas
+        $this->validate();
 
-        User::create([
+        $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
         ]);
 
-        session()->flash('message', 'Usuario registrado correctamente.');
-        
-        $this->reset(); // Limpia los campos del formulario
+        Auth::login($user);
+
+        session()->regenerate();
+
+        return redirect()->intended('/user_profile');
     }
+
 
     public function render()
     {

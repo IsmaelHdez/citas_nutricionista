@@ -39,7 +39,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('login.create');
+        return redirect()->route('login');
     }
 
     
