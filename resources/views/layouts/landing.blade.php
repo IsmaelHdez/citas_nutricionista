@@ -27,6 +27,8 @@
         <main>
             @yield('content')
         </main>
+
+        <livewire:footer />
     </div>
 
     <!-- Livewire Scripts -->
